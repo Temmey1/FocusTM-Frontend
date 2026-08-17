@@ -1,14 +1,13 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
+import { Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { formatNaira, buildWhatsAppMessage } from "@/lib/api";
 
-export default function CheckoutSuccessPage() {
+function SuccessContent() {
   const params = useSearchParams();
   const order = params.get("order") || "";
   const method = params.get("method") || "whatsapp";
@@ -80,5 +79,30 @@ export default function CheckoutSuccessPage() {
         Continue Shopping
       </Link>
     </div>
+  );
+}
+
+function SuccessFallback() {
+  return (
+    <div className="max-w-lg mx-auto px-8 pt-40 pb-28 text-center">
+      <div className="h-14 w-14 mx-auto mb-6 ftm-skeleton rounded-full" />
+      <div className="h-3 w-28 mx-auto mb-3 ftm-skeleton" />
+      <div className="h-10 w-64 mx-auto mb-4 ftm-skeleton" />
+      <div className="h-4 w-full max-w-xs mx-auto mb-2 ftm-skeleton" />
+      <div className="h-7 w-40 mx-auto mb-8 ftm-skeleton" />
+      <div className="h-4 w-full max-w-sm mx-auto mb-8 ftm-skeleton" />
+      <div className="flex flex-col sm:flex-row gap-3 justify-center">
+        <div className="h-12 w-52 ftm-skeleton" />
+        <div className="h-12 w-44 ftm-skeleton" />
+      </div>
+    </div>
+  );
+}
+
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense fallback={<SuccessFallback />}>
+      <SuccessContent />
+    </Suspense>
   );
 }
