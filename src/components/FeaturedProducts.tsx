@@ -24,7 +24,7 @@ export default async function FeaturedProducts() {
       </div>
 
       {/* 1-px grid layout */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-ftm-line">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-10 md:gap-x-8 md:gap-y-12">
         {featured.map((p, i) => (
           <ProductCard product={p} key={p.id} index={i} />
         ))}

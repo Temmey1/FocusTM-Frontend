@@ -1,5 +1,11 @@
+import { Metadata } from "next";
 import ProductCard from "@/components/ProductCard";
 import { getProducts } from "@/lib/products";
+
+export const metadata: Metadata = {
+  title: "Shop",
+  description: "Explore FocusTM Collection — customized focus tops, shirts, caps and wears. Excellence Is The Standard.",
+};
 
 const categories = [
   { value: "",       label: "All"    },
@@ -45,7 +51,7 @@ export default async function ShopPage({ searchParams }: { searchParams: { categ
       {products.length === 0 ? (
         <p className="text-center text-ftm-muted text-sm">No products found.</p>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-ftm-line">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10 md:gap-x-8 md:gap-y-14">
           {products.map((p, i) => (
             <ProductCard product={p} key={p.id} index={i} />
           ))}

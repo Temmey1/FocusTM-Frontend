@@ -14,8 +14,12 @@ export interface DeliveryDetails {
 }
 export type PaymentMethod = "whatsapp" | "monnify";
 export interface Order {
-  id: string; items: CartItem[]; subtotal: number; deliveryFee: number; total: number;
+  id: string; orderNumber?: string; items: CartItem[]; subtotal: number; deliveryFee: number; total: number;
   delivery: DeliveryDetails; paymentMethod: PaymentMethod;
   status: "pending"|"paid"|"processing"|"shipped"|"completed"|"cancelled";
   createdAt: string; userId?: string|null;
+}
+export interface DeliveryLocation {
+  id: string; type: "delivery"|"pickup"; state: string; city?: string;
+  address?: string; fee: number; active: boolean; note?: string;
 }

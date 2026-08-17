@@ -38,6 +38,8 @@ export default function Footer() {
           <h4 className="text-[8px] uppercase tracking-[0.35em] text-ftm-dim mb-5">Contact</h4>
           <ul className="space-y-3 text-[12px] text-ftm-muted">
             <li>Ikorodu, Lagos, Nigeria</li>
+            <li><Link href="/custom-order" className="hover:text-ftm-white transition-colors">Custom Order</Link></li>
+            <li><Link href="/account" className="hover:text-ftm-white transition-colors">My Account</Link></li>
             <li>
               <a href="https://wa.me/2349025012714" target="_blank" className="hover:text-ftm-white transition-colors">
                 +234 902 501 2714
