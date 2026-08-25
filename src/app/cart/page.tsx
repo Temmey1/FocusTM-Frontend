@@ -44,93 +44,98 @@ export default function CartPage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, x: -28 }}
               transition={{ duration: 0.3 }}
-              className="flex items-center gap-6 bg-ftm-black p-5"
+              className="flex flex-col gap-4 bg-ftm-black p-4 md:p-5 md:flex-row md:items-center md:gap-6"
             >
-              {/* image */}
-              <div className="relative h-24 w-20 bg-ftm-charcoal flex-shrink-0 overflow-hidden border border-ftm-line">
-                {item.image ? (
-                  <Image
-                    src={item.image}
-                    alt={item.name}
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="h-full w-full flex items-center justify-center">
+              <div className="flex items-start gap-4 flex-1 min-w-0">
+                {/* image */}
+                <div className="relative h-24 w-20 bg-ftm-charcoal flex-shrink-0 overflow-hidden border border-ftm-line">
+                  {item.image ? (
                     <Image
-                      src="/logo.png"
-                      alt=""
-                      width={32}
-                      height={32}
-                      className="opacity-10 object-contain"
+                      src={item.image}
+                      alt={item.name}
+                      fill
+                      className="object-cover"
                     />
-                  </div>
-                )}
+                  ) : (
+                    <div className="h-full w-full flex items-center justify-center">
+                      <Image
+                        src="/logo.png"
+                        alt=""
+                        width={32}
+                        height={32}
+                        className="opacity-10 object-contain"
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* details */}
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-[12px] uppercase tracking-[0.15em] text-ftm-white truncate">
+                    {item.name}
+                  </h3>
+                  <p className="text-ftm-muted text-[11px] mt-1">
+                    {item.size} · {item.color}
+                    {item.customNote ? ` · ${item.customNote}` : ""}
+                  </p>
+                  <p className="font-display text-[16px] mt-2">
+                    {formatNaira(item.price)}
+                  </p>
+                </div>
               </div>
 
-              {/* details */}
-              <div className="flex-1 min-w-0">
-                <h3 className="text-[12px] uppercase tracking-[0.15em] text-ftm-white truncate">
-                  {item.name}
-                </h3>
-                <p className="text-ftm-muted text-[11px] mt-1">
-                  {item.size} · {item.color}
-                  {item.customNote ? ` · ${item.customNote}` : ""}
-                </p>
-                <p className="font-display text-[16px] mt-2">
-                  {formatNaira(item.price)}
-                </p>
-              </div>
+              {/* controls: qty + remove */}
+              <div className="flex items-center justify-between md:justify-end gap-4 w-full md:w-auto">
+                {/* qty */}
+                <div className="flex items-center border border-ftm-line">
+                  <button
+                    onClick={() =>
+                      updateQuantity(
+                        item.productId,
+                        item.size,
+                        item.color,
+                        item.quantity - 1,
+                      )
+                    }
+                    className="px-3 py-2 text-ftm-muted hover:text-ftm-white transition-colors text-sm"
+                  >
+                    −
+                  </button>
+                  <span className="px-4 text-[13px]">{item.quantity}</span>
+                  <button
+                    onClick={() =>
+                      updateQuantity(
+                        item.productId,
+                        item.size,
+                        item.color,
+                        item.quantity + 1,
+                      )
+                    }
+                    className="px-3 py-2 text-ftm-muted hover:text-ftm-white transition-colors text-sm"
+                  >
+                    +
+                  </button>
+                </div>
 
-              {/* qty */}
-              <div className="flex items-center border border-ftm-line">
+                {/* remove */}
                 <button
                   onClick={() =>
-                    updateQuantity(
-                      item.productId,
-                      item.size,
-                      item.color,
-                      item.quantity - 1,
-                    )
+                    removeItem(item.productId, item.size, item.color)
                   }
-                  className="px-3 py-2 text-ftm-muted hover:text-ftm-white transition-colors text-sm"
+                  className="text-ftm-dim hover:text-red-400 transition-colors md:ml-2"
+                  aria-label="Remove"
                 >
-                  −
-                </button>
-                <span className="px-4 text-[13px]">{item.quantity}</span>
-                <button
-                  onClick={() =>
-                    updateQuantity(
-                      item.productId,
-                      item.size,
-                      item.color,
-                      item.quantity + 1,
-                    )
-                  }
-                  className="px-3 py-2 text-ftm-muted hover:text-ftm-white transition-colors text-sm"
-                >
-                  +
+                  <Trash2 className="h-4 w-4" />
                 </button>
               </div>
-
-              {/* remove */}
-              <button
-                onClick={() =>
-                  removeItem(item.productId, item.size, item.color)
-                }
-                className="text-ftm-dim hover:text-red-400 transition-colors ml-2"
-                aria-label="Remove"
-              >
-                <Trash2 className="h-4 w-4" />
-              </button>
             </motion.div>
           ))}
         </AnimatePresence>
       </div>
 
       {/* summary */}
-      <div className="mt-14 flex flex-col items-end gap-4">
-        <div className="flex justify-between w-full max-w-xs text-[13px]">
+      <div className="mt-14 flex flex-col gap-4">
+        <div className="flex justify-between text-[13px]">
           <span className="text-ftm-muted uppercase tracking-[0.12em]">
             Subtotal
           </span>
@@ -138,12 +143,12 @@ export default function CartPage() {
             {formatNaira(subtotal())}
           </span>
         </div>
-        <p className="text-[11px] text-ftm-dim max-w-xs text-right">
+        <p className="text-[11px] text-ftm-dim text-right">
           Delivery fee calculated at checkout based on your location.
         </p>
         <Link
           href="/checkout"
-          className="px-12 py-4 bg-ftm-white text-ftm-black text-[10px] uppercase tracking-[0.22em] hover:bg-ftm-offwhite transition-colors"
+          className="w-full md:w-auto md:self-end md:px-12 py-4 bg-ftm-white text-ftm-black text-[10px] uppercase tracking-[0.22em] hover:bg-ftm-offwhite transition-colors text-center"
         >
           Proceed to Checkout
         </Link>
