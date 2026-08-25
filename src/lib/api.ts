@@ -27,9 +27,9 @@ export const formatNaira = (amount: number) =>
 export const buildWhatsAppMessage = (orderId: string, total: number, name: string) => {
   const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "2349025012714";
   const text = encodeURIComponent(
-    `Hello FocusTM, I just placed order #${orderId} (${name}) totaling ${formatNaira(
+    `Hello FocusTM, I just placed an order with ref: #${orderId} (${name}) totaling ${formatNaira(
       total
-    )}. I'd like to confirm payment and delivery details.`
+    )}. I'd like to confirm to make payment.`
   );
   return `https://wa.me/${number}?text=${text}`;
 };

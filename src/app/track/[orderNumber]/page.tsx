@@ -25,6 +25,7 @@ interface TrackedOrder {
   method: string;
   state: string;
   city?: string;
+  address: string;
 }
 
 export default function TrackOrderPage({
@@ -166,6 +167,7 @@ export default function TrackOrderPage({
         <p className="text-[12px] text-ftm-muted capitalize">
           {order.method} · {order.state}
           {order.city ? `, ${order.city}` : ""}
+          {order.address ? `, ${order.address}` : ""}
         </p>
       </div>
     </div>
