@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import { Product } from "@/types";
 import { api } from "@/lib/api";
-import { mockProducts } from "@/lib/mockProducts";
 
 const PAGE_SIZE = 8;
 
@@ -81,13 +80,9 @@ export default function ShopPage({ searchParams }: { searchParams: { category?: 
     }
   };
 
-  // If API fails entirely (e.g., backend offline during dev), fall back to mock for the storefront only.
-  const displayProducts = error && !loaded
-    ? (category ? mockProducts.filter((p) => p.category === category) : mockProducts)
-    : products;
-
-  const displayTotal = error && !loaded ? displayProducts.length : total;
-  const displayHasMore = !(!error || loaded) ? false : (error && !loaded ? false : hasMore);
+  const displayProducts = products;
+  const displayTotal = total;
+  const displayHasMore = hasMore;
 
   return (
     <div className="max-w-7xl mx-auto px-8 pt-36 pb-28">
