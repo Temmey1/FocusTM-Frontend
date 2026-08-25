@@ -1,9 +1,9 @@
 import Link from "next/link";
 import ProductCard from "./ProductCard";
-import { getProducts } from "@/lib/products";
+import { getProductsServer } from "@/lib/products";
 
 export default async function FeaturedProducts() {
-  const products = await getProducts();
+  const products = await getProductsServer();
   const featured  = products.filter((p) => p.featured).slice(0, 4);
 
   return (
