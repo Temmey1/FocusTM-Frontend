@@ -9,9 +9,14 @@ function normalize<T extends { _id?: any; id?: string }>(doc: T): T & { id: stri
 
 export async function getProducts(params?: { category?: string }): Promise<Product[]> {
   try {
-    const res = await api.get<Product[]>("/products", { params });
-    if (res && res.data && Array.isArray(res.data)) {
-      return res.data.map((p: any) => normalize(p));
+    const res = await api.get<any>("/products", { params });
+    if (res && res.data) {
+      if (Array.isArray(res.data)) {
+        return res.data.map((p: any) => normalize(p));
+      }
+      if (Array.isArray(res.data.data)) {
+        return res.data.data.map((p: any) => normalize(p));
+      }
     }
   } catch {
     // fall through to mock fallback if network error

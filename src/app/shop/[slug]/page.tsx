@@ -1,22 +1,62 @@
-import { notFound } from "next/navigation";
-import Image from "next/image";
-import { Metadata } from "next";
-import { getProductBySlug } from "@/lib/products";
-import AddToCartPanel from "@/components/AddToCartPanel";
+"use client";
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const product = await getProductBySlug(params.slug);
-  if (!product) return { title: "Product Not Found" };
-  return {
-    title: product.name,
-    description: product.description,
-    openGraph: { title: product.name, description: product.description, images: product.images?.length ? product.images : ["/logo.png"] },
-  };
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useParams, notFound } from "next/navigation";
+import { api } from "@/lib/api";
+import { Product } from "@/types";
+import { mockProducts } from "@/lib/mockProducts";
+import AddToCartPanel from "@/components/AddToCartPanel";
+import ProductLoading from "./loading";
+
+function normalize<T extends { _id?: any; id?: string }>(doc: T): T & { id: string } {
+  const anyDoc = doc as any;
+  return { ...doc, id: anyDoc?.id ?? anyDoc?._id?.toString() ?? String(Math.random()) } as any;
 }
 
-export default async function ProductPage({ params }: { params: { slug: string } }) {
-  const product = await getProductBySlug(params.slug);
-  if (!product) return notFound();
+export default function ProductPage() {
+  const params = useParams<{ slug: string }>();
+  const slug = params?.slug;
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (!slug) return;
+    let cancelled = false;
+    const load = async () => {
+      setLoaded(false);
+      setError(false);
+      try {
+        const res = await api.get<Product>(`/products/slug/${slug}`);
+        if (!cancelled) {
+          if (res?.data) {
+            setProduct(normalize(res.data as any));
+          } else {
+            const m = mockProducts.find((p) => p.slug === slug) || null;
+            if (m) setProduct(m); else setError(true);
+          }
+        }
+      } catch {
+        if (!cancelled) {
+          const m = mockProducts.find((p) => p.slug === slug) || null;
+          if (m) {
+            setProduct(m);
+          } else {
+            setError(true);
+          }
+        }
+      } finally {
+        if (!cancelled) setLoaded(true);
+      }
+    };
+    load();
+    return () => { cancelled = true; };
+  }, [slug]);
+
+  if (!loaded) return <ProductLoading />;
+
+  if (error || !product) return notFound();
 
   const jsonLd = {
     "@context": "https://schema.org",
