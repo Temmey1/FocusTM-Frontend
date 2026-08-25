@@ -60,7 +60,7 @@ export default function Footer() {
                className="text-[11px] font-medium text-ftm-muted hover:text-ftm-white transition-colors tracking-wider">
               TT
             </a>
-            <a href="https://snapchat.com/t/jIaJRbVx" target="_blank" aria-label="Snapchat"
+            <a href="https://snapchat.com/t/2AaERlwE" target="_blank" aria-label="Snapchat"
                className="text-[11px] font-medium text-ftm-muted hover:text-ftm-white transition-colors tracking-wider">
               SC
             </a>

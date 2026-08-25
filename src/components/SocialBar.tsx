@@ -6,7 +6,7 @@ import { Instagram, MessageCircle } from "lucide-react";
 const socials = [
   { label: "Instagram", href: "https://www.instagram.com/focus_tm_collection", icon: "ig"  },
   { label: "TikTok",    href: "https://www.tiktok.com/@focus__tm",             icon: "tt"  },
-  { label: "Snapchat",  href: "https://snapchat.com/t/jIaJRbVx",               icon: "sc"  },
+  { label: "Snapchat",  href: "https://snapchat.com/t/2AaERlwE",               icon: "sc"  },
   { label: "WhatsApp",  href: "https://wa.me/2349025012714",                    icon: "wa"  },
 ];
 
