@@ -259,7 +259,7 @@ export default function CheckoutPage() {
                 {
                   id: "monnify",
                   title: "Pay Online (Monnify)",
-                  sub: "Secure card / bank transfer checkout.",
+                  sub: "Secure card / bank transfer checkout. Coming soon...",
                 },
               ] as { id: PaymentMethod; title: string; sub: string }[]
             ).map((opt) => (

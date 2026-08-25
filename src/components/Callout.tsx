@@ -36,7 +36,7 @@ export default function Callout() {
           className="text-[13px] text-ftm-muted leading-[1.9] tracking-[0.04em] mb-10"
         >
           Ikorodu, Lagos, Nigeria — shipped nationwide.<br />
-          Order via WhatsApp or pay online. Excellence delivered to your door.
+          Order via WhatsApp. Excellence delivered to your door.
         </motion.p>
 
         <motion.a
