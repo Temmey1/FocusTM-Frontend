@@ -13,6 +13,9 @@ const heading = Bebas_Neue({ subsets: ["latin"], weight: ["400"], variable: "--f
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://focustm.com"),
+    verification: {
+    google: "YyPNtKrW9e4PZpTlpGNMfKwv3WMKTQVN-5p3F44h9Dk",
+  },
   title: { default: "FocusTM Collection | Excellence Is The Standard", template: "%s | FocusTM Collection" },
   description: "FocusTM Collection — customized focus tops, shirts, caps and wears. Style meets confidence, elegance meets excellence. Explore. Shop. Elevate.",
   keywords: ["FocusTM", "Nigerian streetwear", "custom apparel Lagos", "customized shirts Nigeria", "luxury streetwear", "FTM collection"],
